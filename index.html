@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Answer Board</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <style>
+    body { font-family: sans-serif; text-align: center; background: #f4f4f4; }
+    input, button { padding: 10px; margin: 5px; font-size: 1em; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 5px 0; background: #fff; padding: 10px; border-radius: 5px; width: 60%; margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body>
+  <h2>Submit Your Answer</h2>
+  <input type="text" id="nameInput" placeholder="Your name">
+  <input type="text" id="answerInput" placeholder="Your answer">
+  <button onclick="submitAnswer()">Submit</button>
+
+  <h3>Responses</h3>
+  <ul id="responseList"></ul>
+  <button onclick="clearAnswers()">Clear Answers</button>
+
+  <script>
+    // Replace with your Firebase config
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const ref = db.ref("answers");
+
+    function submitAnswer() {
+      const name = document.getElementById("nameInput").value.trim();
+      const answer = document.getElementById("answerInput").value.trim();
+      if (name && answer) {
+        ref.push({ name, answer });
+        document.getElementById("nameInput").value = "";
+        document.getElementById("answerInput").value = "";
+      }
+    }
+
+    ref.on("child_added", function(snapshot) {
+      const data = snapshot.val();
+      const li = document.createElement("li");
+      li.textContent = `${data.name}: ${data.answer}`;
+      document.getElementById("responseList").appendChild(li);
+    });
+
+    function clearAnswers() {
+      ref.remove();
+      document.getElementById("responseList").innerHTML = "";
+    }
+  </script>
+</body>
+</html>

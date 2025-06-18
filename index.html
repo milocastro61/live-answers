@@ -23,16 +23,17 @@
   <button onclick="clearAnswers()">Clear Answers</button>
 
   <script>
-    // Replace with your Firebase config
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
+    
+const firebaseConfig = {
+  apiKey: "AIzaSyB0ZLCbVWxiQUCj8U3WrUNqE3HCiOiPMJA",
+  authDomain: "balloon-game-firebase.firebaseapp.com",
+  databaseURL: "https://balloon-game-firebase.firebaseio.com",
+  projectId: "balloon-game-firebase",
+  storageBucket: "balloon-game-firebase.appspot.com",
+  messagingSenderId: "940188968588",
+  appId: "1:940188968588:web:ed5207673c50a33397bda9"
+};
+
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
